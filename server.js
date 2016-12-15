@@ -103,7 +103,6 @@ function ensureAuthenticated(req, res, next) {
 
 app.post("/user", function(req, res, next) {
 
-  var displayName = req.body.displayName;
   var username = req.body.username;
   var password = req.body.password;
 
@@ -121,7 +120,6 @@ app.post("/user", function(req, res, next) {
     }
 
     var newUser = new User({
-      displayName: displayName,
       username: username,
       password: password
     });
@@ -139,7 +137,7 @@ app.post("/user", function(req, res, next) {
 
 app.post('/going', function(req, res){
   var barName = req.body.bar;
-  var userName = req.user.displayName;
+  var userName = req.user.username;
   // check if this guy is already marked going
   Venue.findOne({name: barName, "going.displayName": userName}).then((venue) => {
     // if venue does not exists or the name does not container in the venue

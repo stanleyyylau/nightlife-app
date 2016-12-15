@@ -16,8 +16,8 @@ html
       .search
         h1.title You need to login or register
         form(action="/user", method="post")
-          input(name="displayName", type="text", placeholder="your display name")
-          input(name="username", type="text", placeholder="your username")
-          input(name="password", type="password", placeholder="your passport here")
+          //- input(name="displayName", type="text", placeholder="your display name")
+          input(name="username", type="text", placeholder="your username", required=true)
+          input(name="password", type="password", placeholder="your passport here", required=true)
           input.J_login(type="submit", href="javascript:void(0);", value="login/signup")
     script(src="/js/jquery-1.10.1.min.js")
