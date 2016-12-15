@@ -7,6 +7,7 @@ const cookieParser = require('cookie-parser');
 const _ = require('lodash');
 
 const User = require("./models/User");
+const Venue = require("./models/Venue");
 const mongoose = require('./config/mongoose');
 const setUpPassport = require("./config/setuppassport");
 
@@ -42,6 +43,7 @@ var request_yelp = function(set_parameters, callback) {
 var app = express();
 const port = process.env.PORT || 3000;
 
+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
@@ -54,11 +56,20 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.use(function(req, res, next) {
+  res.locals.currentUser = req.user;
+  next();
+});
+
 app.use(express.static('public'))
 app.set('view engine', 'pug')
 
 app.get('/', function(req, res) {
-  res.render('index', { login: false });
+  if(req.user){
+    res.render('index', { notLogIn: false });
+  }else{
+    res.render('index', { notLogIn: true });
+  }
 })
 
 app.get('/user', function(req, res) {
@@ -103,6 +114,7 @@ app.post("/user", function(req, res, next) {
         failureRedirect: "/user",
         failureFlash: true
       })
+      return next();
     }
 
     var newUser = new User({
@@ -120,6 +132,50 @@ app.post("/user", function(req, res, next) {
 }));
 
 
+
+
+app.post('/going', function(req, res){
+  var barName = req.body.bar;
+  var userName = req.user.displayName;
+  // check if this guy is already marked going
+  Venue.findOne({name: barName, "going.displayName": userName}).then((venue) => {
+    // if venue does not exists or the name does not container in the venue
+    if(venue){
+      // if(venue.going.indexOf(userName) >= 0 ){
+        // get index first
+        var indexToRemove;
+        venue.going.forEach(function(elem, index){
+          if(elem.displayName == userName)
+          indexToRemove = index;
+        });
+        console.log('the index to remove is ... ')
+        console.log(indexToRemove)
+        console.log(venue)
+        venue.going[indexToRemove].remove();
+        venue.save().then((user) => console.log(user));
+
+    }else{
+      Venue.findOne({name: barName}).then((venue) => {
+        if(venue){
+          venue.going.push({displayName: userName});
+          venue.save()
+          .then((place) => {
+            console.log(place);
+          })
+        }else{
+          var venue = new Venue({
+            name: barName
+          })
+          venue.going.push({displayName: userName});
+          venue.save()
+          .then((place) => {
+            console.log(place);
+          })
+        }
+      })
+    }
+  })
+})
 
 
 app.listen(port, () => {

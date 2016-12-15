@@ -1,0 +1,128 @@
+@import "_reset";
+
+.container {
+  width: 1200px;
+  margin: 0 auto;
+  padding: 50px 0;
+}
+
+.search {
+  box-sizing: border-box;
+  text-align: center;
+  padding: 50px;
+  background-color: #eee;
+  .title {
+    font-size: 30px;
+    margin-bottom: 10px;
+  }
+  p {
+    font-size: 20px;
+    line-height: 1.5;
+    padding: 0 60px;
+    margin-bottom: 10px;
+  }
+  a.J_confirm {
+    background-color: #3F51B5;
+    padding: 5px 15px;
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+  }
+  .J_location {
+    padding: 5px;
+    margin-right: 10px;
+    width: 200px;
+    border-radius: 5px;
+    border: 1px solid rgba(158, 158, 158, 0.44);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    &:focus{
+      outline: 0;
+      border-color: #9C27B0;
+    }
+  }
+}
+
+.result {
+  .item {
+    padding: 30px;
+    background-color: #eee;
+    margin-top: 30px;
+    border: 1px solid #cacaca;
+    h3 {
+      font-size: 18px;
+      margin-bottom: 5px;
+      font-weight: bolder;
+    }
+    .how-many-going{
+      padding: 10px;
+    }
+  }
+  .row {
+    display: flex;
+    .venue-img {
+      padding: 5px;
+      border: 1px solid #e5e5e5;
+      margin-right: 10px;
+      background-color: white;
+    }
+    .venue-title{
+      flex: 1;
+      font-size: 25px;
+      color: #3F51B5;
+      align-self: center;
+    }
+    .venue-vote {
+      background-color: #E91E63;
+      padding: 10px;
+      color: white;
+      border-radius: 5px;
+      height: 18px;
+    }
+  }
+  .venue-description {
+    display: inline-block;
+    margin: 10px 0;
+    width: 1100px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  .people {
+    background-color: #2196F3;
+    display: inline-block;
+    padding: 5px;
+    color: white;
+    border-radius: 5px;
+    margin-top: 5px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+  }
+}
+
+form {
+  width: 500px;
+  margin: 0 auto;
+  input{
+    box-sizing: border-box;
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    display: block;
+    font-size: 18px;
+    border-radius: 5px;
+    border: 1px solid #c0baba;
+    &:focus{
+      outline: 0;
+      border: 1px solid #bcbcc2;
+    }
+  }
+  .J_login{
+    text-decoration: none;
+    padding: 10px 5px;
+    background-color: #03A9F4;
+    color: white;
+    margin-top: 30px;
+    display: block;
+    border-radius: 5px;
+  }
+}

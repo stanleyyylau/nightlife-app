@@ -1,6 +1,5 @@
 function genTpl (tpl, context){
   var rendered = tpl
-  console.log(Object.keys(context))
   Object.keys(context).forEach(function( elem, index, array ){
     var regx = new RegExp('%'+elem+'%', "g")
     rendered = rendered.replace(regx, context[elem]);
@@ -34,6 +33,7 @@ $(document).ready(function(){
             newContent += genTpl(tpl, elem);
           })
           $('.result').html(newContent);
+          confirmGoing();
         }
 
       }
@@ -66,18 +66,37 @@ $(document).ready(function(){
             newContent += genTpl(tpl, elem);
           })
           $('.result').html(newContent);
+          confirmGoing();
         }
       }
     });
   })
 
+
+
+})
+
+
+
+function confirmGoing() {
   $('.venue-vote').on('click', function(){
     if(notLogIn){
       window.location.pathname="/user";
     }else{
       // user is already login, let's tell the server this guy is going to the bar
-
+      var barName = $(this).closest('.item').data('id');
+      console.log(barName);
+      $.ajax({
+        type: "POST",
+        url: "/going",
+        data: { bar: barName },
+        cache: false,
+        success: function(data){
+          // date should container the name of the current user
+          // to do, going increment by 1
+          // todo, add that name to who's going
+        }
+      });
     }
   })
-
-})
+}

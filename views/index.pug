@@ -19,8 +19,7 @@ html
         input.J_location(type="text", placeholder="enter your location")
         a.J_confirm(href="javascript:void(0);") confirm
       .result
-    unless login
-      script.
-        var notLogIn = true;
+    script.
+      var notLogIn = #{notLogIn};
     script(src="/js/jquery-1.10.1.min.js")
     script(src="/js/app.js")
