@@ -84,7 +84,10 @@ app.post('/yelp', function(req, res){
         error: true
       })
     }else{
-      res.json(response);
+      Venue.find({}).then((allVenue) => {
+        res.json({response: response,
+                allVenue: allVenue})
+      })
     }
   })
 })
@@ -152,7 +155,7 @@ app.post('/going', function(req, res){
         console.log(indexToRemove)
         console.log(venue)
         venue.going[indexToRemove].remove();
-        venue.save().then((user) => console.log(user));
+        venue.save().then((user) => res.json(user));
 
     }else{
       Venue.findOne({name: barName}).then((venue) => {
@@ -161,6 +164,7 @@ app.post('/going', function(req, res){
           venue.save()
           .then((place) => {
             console.log(place);
+            res.json(place)
           })
         }else{
           var venue = new Venue({
@@ -170,6 +174,7 @@ app.post('/going', function(req, res){
           venue.save()
           .then((place) => {
             console.log(place);
+            res.json(place)
           })
         }
       })
